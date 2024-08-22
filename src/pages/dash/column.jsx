@@ -3,15 +3,15 @@
 
 export const columns = [
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "NameMMT",
+    header: "Name",
   },
   {
-    accessorKey: "email",
-    header: "Email",
-  },
-  {
-    accessorKey: "amount",
-    header: "Amount",
+    accessorKey: "Prc",
+    header: () => <div className="text-right">Price</div>,
+    cell: ({ row }) => {
+      const car = row.original;
+      return <div className="text-right">{car.Prc}</div>;
+    },
   },
 ];

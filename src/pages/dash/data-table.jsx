@@ -15,7 +15,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export function DataTable({ columns, data }) {
+export default function DataTable({ columns, data }) {
   const table = useReactTable({
     data,
     columns,

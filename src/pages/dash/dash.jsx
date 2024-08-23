@@ -7,7 +7,6 @@ import { MyBarChart } from "./barchart";
 
 export default function Dash() {
   const [cars, setCars] = useState([]);
-  // const [brands, setBrands] = useState([]);
   const [data, setData] = useState([]);
   useEffect(() => {
     fetch("/taladrod-cars.min.json")
@@ -20,7 +19,7 @@ export default function Dash() {
         const result = brandsData.map((brand) => {
           const cars = carsData.filter((car) => car.MkID === brand.mkID);
           return {
-            brand,
+            brand: brand.Name,
             count: cars.length,
             fill: `hsl(${Math.random() * 360}, 70%, 50%)`,
           };

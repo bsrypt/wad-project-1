@@ -39,6 +39,7 @@ export default function Dash() {
   return (
     <div className="p-6 gap-4 flex min-h-screen w-full flex-col">
       <p className="text-2xl font-semibold">Dashboard</p>
+
       <div className="flex gap-4">
         <MyPieChart data={data} />
         {/* <MyBarChart brands={brands} /> */}

@@ -49,7 +49,7 @@ const chartConfig = {
   },
 };
 
-export function MyPieChart() {
+export function MyPieChart({ data }) {
   const totalVisitors = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
   }, []);
@@ -71,9 +71,9 @@ export function MyPieChart() {
               content={<ChartTooltipContent hideLabel />}
             />
             <Pie
-              data={chartData}
-              dataKey="visitors"
-              nameKey="browser"
+              data={data}
+              dataKey="count"
+              nameKey="brand"
               innerRadius={60}
               strokeWidth={5}
             >

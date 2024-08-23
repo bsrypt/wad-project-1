@@ -13,8 +13,8 @@ function App() {
 
   return (
     <>
-      <div id="sidebar">
-        <h1>React Router Contacts</h1>
+      <div>
+        {/* <h1>React Router Contacts</h1> */}
         <Topbar />
         <div id="detail">
           <Outlet />

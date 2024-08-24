@@ -1,3 +1,5 @@
+"use client";
+
 import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
@@ -11,6 +13,8 @@ import {
 } from "@/components/ui/card";
 import {
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
@@ -38,7 +42,7 @@ export function MyBarChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Bar Chart - Multiple</CardTitle>
+        <CardTitle>Bar Chart - Stacked + Legend</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent>
@@ -52,12 +56,20 @@ export function MyBarChart() {
               axisLine={false}
               tickFormatter={(value) => value.slice(0, 3)}
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dashed" />}
+            <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+            <ChartLegend content={<ChartLegendContent />} />
+            <Bar
+              dataKey="desktop"
+              stackId="a"
+              fill="var(--color-desktop)"
+              radius={[0, 0, 4, 4]}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-            <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+            <Bar
+              dataKey="mobile"
+              stackId="a"
+              fill="var(--color-mobile)"
+              radius={[4, 4, 0, 0]}
+            />
           </BarChart>
         </ChartContainer>
       </CardContent>

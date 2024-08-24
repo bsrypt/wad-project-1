@@ -27,7 +27,7 @@ export default function Highlight() {
   const [highlightCar, setHighlightCar] = useState([]);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   useEffect(() => {
-    setHighlightCar(JSON.parse(localStorage.getItem("cars")));
+    setHighlightCar(JSON.parse(localStorage.getItem("cars") || "[]"));
     fetch("/taladrod-cars.min.json")
       .then((response) => response.json())
       .then((jsonData) => {
@@ -39,91 +39,42 @@ export default function Highlight() {
   }, []);
 
   return (
-    <div className=" p-6 flex flex-col items-center">
+    <div className=" p-6 flex flex-col items-center min-h-screen">
       <div className="flex justify-between w-full">
         <p className="text-2xl font-semibold">Highlight</p>
-        <div className="flex gap-2">
-          {isDeleteMode ? (
+        {highlightCar.length > 0 && (
+          <div className="flex gap-2">
+            {isDeleteMode ? (
+              <Button
+                className="w-12"
+                variant="destructive"
+                onClick={() => {
+                  setHighlightCar([]);
+                  localStorage.setItem("cars", JSON.stringify([]));
+                  setIsDeleteMode(false);
+                }}
+              >
+                Clear
+              </Button>
+            ) : null}
             <Button
               className="w-12"
-              variant="destructive"
-              onClick={() => {
-                setHighlightCar([]);
-                localStorage.setItem("cars", JSON.stringify([]));
-                setIsDeleteMode(false);
-              }}
+              variant="outline"
+              onClick={() => setIsDeleteMode(!isDeleteMode)}
             >
-              Clear
+              {isDeleteMode ? <X /> : <Trash />}
             </Button>
-          ) : null}
-          <Button
-            className="w-12"
-            variant="outline"
-            onClick={() => setIsDeleteMode(!isDeleteMode)}
-          >
-            {isDeleteMode ? <X /> : <Trash />}
-          </Button>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button>Add Highlight Car</Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>Add Highlight</DialogTitle>
-                <DialogDescription>
-                  Add highlight car to the highlight page
-                </DialogDescription>
-              </DialogHeader>
-              <div className="">
-                <div className="flex items-center gap-4">
-                  <Label htmlFor="name" className="text-right">
-                    Cars
-                  </Label>
-                  <Select
-                    onValueChange={(e) => {
-                      setSelectedCar(cars.find((item) => item.Cid === e));
-                    }}
-                  >
-                    <SelectTrigger className="w-[300px]">
-                      <SelectValue placeholder="Choose a car" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {cars.map((item, index) => {
-                        return (
-                          <SelectItem key={index} value={item.Cid}>
-                            {item.NameMMT}
-                          </SelectItem>
-                        );
-                      })}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <DialogFooter>
-                <Button
-                  type="submit"
-                  onClick={() => {
-                    //check if duplicate
-                    if (
-                      highlightCar.find((item) => item.Cid === selectedCar.Cid)
-                    ) {
-                      return;
-                    }
-                    setHighlightCar([...highlightCar, selectedCar]);
-                    localStorage.setItem(
-                      "cars",
-                      JSON.stringify([...highlightCar, selectedCar]),
-                    );
-                  }}
-                >
-                  Add
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </div>
+            <AddHighlight
+              cars={cars}
+              setHighlightCar={setHighlightCar}
+              highlightCar={highlightCar}
+              setSelectedCar={setSelectedCar}
+              selectedCar={selectedCar}
+            />
+          </div>
+        )}
       </div>
-      {highlightCar && highlightCar.length > 0 ? (
+      {highlightCar.length > 0 ? (
         <div className="flex flex-wrap justify-center mt-6 gap-4">
           {highlightCar.map((item, index) => {
             return (
@@ -157,8 +108,93 @@ export default function Highlight() {
           })}
         </div>
       ) : (
-        <p className="mt-20">No Highlight Car</p>
+        <div className="flex flex-1 w-full items-center mt-4 justify-center rounded-lg border border-dashed shadow-sm">
+          <div className="flex flex-col items-center gap-1 text-center">
+            <h3 className="text-2xl font-bold tracking-tight">
+              You don&apos;t have any highlight car
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              Add your favorite cars to highlight
+            </p>
+            <div className="mt-2">
+              <AddHighlight
+                cars={cars}
+                setHighlightCar={setHighlightCar}
+                highlightCar={highlightCar}
+                setSelectedCar={setSelectedCar}
+                selectedCar={selectedCar}
+              />
+            </div>
+          </div>
+        </div>
       )}
     </div>
+  );
+}
+
+function AddHighlight({
+  cars,
+  setHighlightCar,
+  highlightCar,
+  setSelectedCar,
+  selectedCar,
+}) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button>Add Highlight Car</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Add Highlight</DialogTitle>
+          <DialogDescription>
+            Add highlight car to the highlight page
+          </DialogDescription>
+        </DialogHeader>
+        <div className="">
+          <div className="flex items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Cars
+            </Label>
+            <Select
+              onValueChange={(e) => {
+                setSelectedCar(cars.find((item) => item.Cid === e));
+              }}
+            >
+              <SelectTrigger className="w-[300px]">
+                <SelectValue placeholder="Choose a car" />
+              </SelectTrigger>
+              <SelectContent>
+                {cars.map((item, index) => {
+                  return (
+                    <SelectItem key={index} value={item.Cid}>
+                      {item.NameMMT}
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        <DialogFooter>
+          <Button
+            type="submit"
+            onClick={() => {
+              //check if duplicate
+              if (highlightCar.find((item) => item.Cid === selectedCar.Cid)) {
+                return;
+              }
+              setHighlightCar([...highlightCar, selectedCar]);
+              localStorage.setItem(
+                "cars",
+                JSON.stringify([...highlightCar, selectedCar]),
+              );
+            }}
+          >
+            Add
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

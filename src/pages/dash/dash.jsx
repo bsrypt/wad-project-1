@@ -42,7 +42,7 @@ export default function Dash() {
 
       <div className="flex gap-4">
         <MyPieChart data={data} />
-        {/* <MyBarChart brands={brands} /> */}
+        <MyBarChart />
       </div>
 
       <p className="mt-6 text-2xl font-semibold">Cars</p>

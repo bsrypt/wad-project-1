@@ -32,9 +32,9 @@ import {
 
 } from "@radix-ui/colors";
 export default function Dash() {
-  const [cars, setCars] = useState([]);
   const [pieData, setPieData] = useState([]);
   const [barData, setBarData] = useState([]);
+  const [tableData, setTableData] = useState([]);
   const colors = [
     tomato.tomato9,
     red.red9,
@@ -66,7 +66,6 @@ export default function Dash() {
       .then((jsonData) => {
         const carsData = jsonData.Cars;
         const brandsData = jsonData.MMList;
-        setCars(carsData);
 
         const pie = brandsData.map((brand, index) => {
           const cars = carsData.filter((car) => car.MkID === brand.mkID);
@@ -99,6 +98,33 @@ export default function Dash() {
         });
         setBarData(bar);
 
+        const table = brandsData.map((brand, index) => {
+          const cars = carsData.filter((car) => car.MkID === brand.mkID);
+
+
+
+          const modelsCount = {};
+          cars.forEach((car) => {
+            if (modelsCount[car.Model]) {
+              modelsCount[car.Model] += 1; // Increment count if model already exists
+            } else {
+              modelsCount[car.Model] = 1; // Initialize count if model is not in the object
+            }
+          });
+
+          const models = Object.keys(modelsCount).map((model) => ({
+            name: model,
+            count: modelsCount[model],
+          }));
+          return {
+            brand: brand.Name,
+            models: models,
+          };
+
+        });
+        setTableData(table);
+
+
       })
       .catch((error) => console.error("Error fetching JSON:", error));
   }, []);
@@ -110,7 +136,7 @@ export default function Dash() {
 
 
       <p className="mt-6 text-2xl font-semibold">Cars</p>
-      <DataTable columns={columns} data={cars} />
+      <DataTable columns={columns} data={tableData} />
     </div>
   );
 }

@@ -3,9 +3,30 @@
 
 export const columns = [
   {
-    accessorKey: "NameMMT",
-    header: "Name",
+    accessorKey: "brand",
+    header: "Brand",
   },
+  {
+    accessorKey: "models",
+    header: "Models",
+    cell: ({ row }) => {
+      const car = row.original;
+      return (
+        <div>
+          {car.models.length > 0 ? (
+            car.models.map((model, index) => (
+              <div key={index}>
+                {model.name} ({model.count})
+              </div>
+            ))
+          ) : (
+            <div>No Models</div>
+          )}
+        </div>
+      );
+    },
+  },
+
   {
     accessorKey: "Prc",
     header: () => <div className="text-right">Price</div>,

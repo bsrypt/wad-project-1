@@ -42,7 +42,6 @@ export function MyBarChart({ data, colors }) {
   const allModels = Array.from(
     new Set(data.flatMap((item) => Object.keys(item).filter((key) => key !== "brand")))
   );
-  console.log(data);
   return (
     <Card>
       <CardHeader>

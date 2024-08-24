@@ -40,7 +40,7 @@ export default function Highlight() {
 
   return (
     <div className=" p-6 flex flex-col items-center min-h-screen">
-      <div className="flex justify-between w-full">
+      <div className="mt-16 flex justify-between w-full">
         <p className="text-2xl font-semibold">Highlight</p>
         {highlightCar.length > 0 && (
           <div className="flex gap-2">

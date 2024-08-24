@@ -123,7 +123,7 @@ export default function Highlight() {
           </Dialog>
         </div>
       </div>
-      {highlightCar.length > 0 ? (
+      {highlightCar && highlightCar.length > 0 ? (
         <div className="flex flex-wrap justify-center mt-6 gap-4">
           {highlightCar.map((item, index) => {
             return (

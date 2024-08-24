@@ -17,6 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Trash, X } from "lucide-react";
@@ -28,7 +29,7 @@ export default function Highlight() {
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   useEffect(() => {
     setHighlightCar(JSON.parse(localStorage.getItem("cars") || "[]"));
-    fetch("/taladrod-cars.min.json")
+    fetch("/taladrod-cars.json")
       .then((response) => response.json())
       .then((jsonData) => {
         const carsData = jsonData.Cars;
@@ -166,6 +167,11 @@ function AddHighlight({
               </SelectTrigger>
               <SelectContent>
                 {cars.map((item, index) => {
+                  if (
+                    highlightCar.find((highlight) => highlight.Cid === item.Cid)
+                  ) {
+                    return null;
+                  }
                   return (
                     <SelectItem key={index} value={item.Cid}>
                       {item.NameMMT}
@@ -177,22 +183,24 @@ function AddHighlight({
           </div>
         </div>
         <DialogFooter>
-          <Button
-            type="submit"
-            onClick={() => {
-              //check if duplicate
-              if (highlightCar.find((item) => item.Cid === selectedCar.Cid)) {
-                return;
-              }
-              setHighlightCar([...highlightCar, selectedCar]);
-              localStorage.setItem(
-                "cars",
-                JSON.stringify([...highlightCar, selectedCar]),
-              );
-            }}
-          >
-            Add
-          </Button>
+          <DialogClose asChild>
+            <Button
+              // type="submit"
+              onClick={() => {
+                //check if duplicate
+                if (highlightCar.find((item) => item.Cid === selectedCar.Cid)) {
+                  return;
+                }
+                setHighlightCar([...highlightCar, selectedCar]);
+                localStorage.setItem(
+                  "cars",
+                  JSON.stringify([...highlightCar, selectedCar]),
+                );
+              }}
+            >
+              Add
+            </Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

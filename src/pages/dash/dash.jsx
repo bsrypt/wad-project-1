@@ -32,7 +32,9 @@ import {
 
 } from "@radix-ui/colors";
 export default function Dash() {
-  const [cars, setCars] = useState([]); const [data, setData] = useState([]);
+  const [cars, setCars] = useState([]);
+  const [pieData, setPieData] = useState([]);
+  const [barData, setBarData] = useState([]);
   const colors = [
     tomato.tomato9,
     red.red9,
@@ -66,7 +68,7 @@ export default function Dash() {
         const brandsData = jsonData.MMList;
         setCars(carsData);
 
-        const result = brandsData.map((brand, index) => {
+        const pie = brandsData.map((brand, index) => {
           const cars = carsData.filter((car) => car.MkID === brand.mkID);
           return {
             brand: brand.Name,
@@ -76,19 +78,36 @@ export default function Dash() {
 
           };
         });
-        setData(result);
-        console.log(result);
+        setPieData(pie);
+
+        const bar = brandsData.map((brand, index) => {
+          const cars = carsData.filter((car) => car.MkID === brand.mkID);
+          const modelsCount = {};
+
+          cars.forEach((car) => {
+            if (modelsCount[car.Model]) {
+              modelsCount[car.Model] += 1; // Increment count if model already exists
+            } else {
+              modelsCount[car.Model] = 1; // Initialize count if model is not in the object
+            }
+          });
+          return {
+            brand: brand.Name,
+            ...modelsCount, // Spread the models count into the object
+          };
+
+        });
+        setBarData(bar);
+
       })
       .catch((error) => console.error("Error fetching JSON:", error));
   }, []);
   return (
     <div className="p-6 gap-4 flex min-h-screen w-full flex-col">
       <p className="mt-16 text-2xl font-semibold">Dashboard</p>
+      <MyPieChart data={pieData} />
+      <MyBarChart data={barData} colors={colors} />
 
-      <div className="flex gap-4">
-        <MyPieChart data={data} />
-        <MyBarChart />
-      </div>
 
       <p className="mt-6 text-2xl font-semibold">Cars</p>
       <DataTable columns={columns} data={cars} />

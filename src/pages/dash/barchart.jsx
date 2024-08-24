@@ -18,14 +18,14 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
+// const chartData = [
+//   { month: "January", desktop: 186, mobile: 80 },
+//   { month: "February", desktop: 305, mobile: 200 },
+//   { month: "March", desktop: 237, mobile: 120 },
+//   { month: "April", desktop: 73, mobile: 190 },
+//   { month: "May", desktop: 209, mobile: 130 },
+//   { month: "June", desktop: 214, mobile: 140 },
+// ];
 
 const chartConfig = {
   desktop: {
@@ -38,7 +38,11 @@ const chartConfig = {
   },
 };
 
-export function MyBarChart() {
+export function MyBarChart({ data, colors }) {
+  const allModels = Array.from(
+    new Set(data.flatMap((item) => Object.keys(item).filter((key) => key !== "brand")))
+  );
+  console.log(data);
   return (
     <Card>
       <CardHeader>
@@ -47,10 +51,10 @@ export function MyBarChart() {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
+          <BarChart accessibilityLayer data={data}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey="brand"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
@@ -58,18 +62,16 @@ export function MyBarChart() {
             />
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
             <ChartLegend content={<ChartLegendContent />} />
-            <Bar
-              dataKey="desktop"
-              stackId="a"
-              fill="var(--color-desktop)"
-              radius={[0, 0, 4, 4]}
-            />
-            <Bar
-              dataKey="mobile"
-              stackId="a"
-              fill="var(--color-mobile)"
-              radius={[4, 4, 0, 0]}
-            />
+            {allModels.map((model, index) => (
+              <Bar
+                key={model}
+                dataKey={model}
+                stackId="a"
+                fill={colors[index]} // Default color if not in config
+                width={1}
+
+              />
+            ))}
           </BarChart>
         </ChartContainer>
       </CardContent>

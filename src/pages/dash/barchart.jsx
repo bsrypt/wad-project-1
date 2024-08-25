@@ -66,7 +66,7 @@ export function MyBarChart({ data, colors }) {
                 key={model}
                 dataKey={model}
                 stackId="a"
-                fill={colors[index]} // Default color if not in config
+                fill={colors[index % colors.length]} // Default color if not in config
                 width={1}
 
               />

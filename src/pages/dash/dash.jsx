@@ -67,7 +67,7 @@ export default function Dash() {
       return {
         brand: brand.Name,
         count: cars.length,
-        fill: colors[index],
+        fill: colors[index % colors.length],
       };
     });
     setPieData(pie);

@@ -1,4 +1,4 @@
-
+# PROJECT 01 - Car Analytics
 
 - Score: 10%
 - Due Date: Sunday 25 August 2024
@@ -88,7 +88,6 @@ npm run build
 
 ![Dashboard](./example1.png)
 ![Highlighted Cars](./example2.png)
-```
 
 ## Team Members
 

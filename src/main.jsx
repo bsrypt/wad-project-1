@@ -8,16 +8,16 @@ import App from "./App.jsx";
 import "./index.css";
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/wad-project-1/",
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "dash",
+        path: "/wad-project-1/dash",
         element: <DashPage />,
       },
       {
-        path: "highlight",
+        path: "/wad-project-1/highlight",
         element: <HighlightPage />,
       },
     ],

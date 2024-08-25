@@ -19,13 +19,13 @@ export default function Topbar() {
         </a>
         <Link
           className={`${location.pathname === "/dash" ? "text-foreground" : "text-muted-foreground"} transition-colors hover:text-foreground`}
-          to={`/dash`}
+          to={`dash`}
         >
           Dashboard
         </Link>
         <Link
           className={`${location.pathname === "/highlight" ? "text-foreground" : "text-muted-foreground"} transition-colors hover:text-foreground`}
-          to={`/highlight`}
+          to={`highlight`}
         >
           Highlight
         </Link>
@@ -49,14 +49,14 @@ export default function Topbar() {
 
         <Link
           className={`${location.pathname === "/dash" ? "text-foreground" : "text-muted-foreground"} transition-colors hover:text-foreground`}
-          to={`/dash`}
+          to={`dash`}
         >
           Dashboard
         </Link>
 
         <Link
           className={`${location.pathname === "/highlight" ? "text-foreground" : "text-muted-foreground"} transition-colors hover:text-foreground`}
-          to={`/highlight`}
+          to={`highlight`}
         >
           Highlight
         </Link>

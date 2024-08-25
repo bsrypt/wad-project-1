@@ -6,9 +6,10 @@ function App() {
   const navigate = useNavigate();
   console.log(location);
   useEffect(() => {
-    if (location.pathname === "/") {
-      navigate("/dash");
-    }
+    // if (((!(location.pathname).includes("dash")) || (!(location.pathname).includes("highlight")))) {
+    //   console.log('navigae')
+    //   navigate("/dash");
+    // }
   });
 
   return (

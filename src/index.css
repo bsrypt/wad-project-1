@@ -67,3 +67,24 @@
     @apply bg-background text-foreground;
   }
 }
+
+#models {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#models td, #models th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#models tr:nth-child(even){background-color: #f2f2f2;}
+
+#models tr:hover {background-color: #ddd;}
+
+#models th {
+  text-align: left;
+  background-color: #1f1e1e;
+  color: white;
+}

@@ -53,24 +53,23 @@ export default function Topbar() {
               href="#"
               className="flex items-center gap-2 text-lg font-semibold"
             >
-              LOGO
+              WAD-PROJECT-01
               <span className="sr-only">Acme Inc</span>
             </a>
-            <a href="#" className="text-muted-foreground hover:text-foreground">
-              Dashboard
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-foreground">
-              Orders
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-foreground">
-              Products
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-foreground">
-              Customers
-            </a>
-            <a href="#" className="hover:text-foreground">
-              Settings
-            </a>
+
+        <Link
+          className={`${location.pathname === "/dash" ? "text-foreground" : "text-muted-foreground"} transition-colors hover:text-foreground`}
+          to={`/dash`}
+        >
+          Dashboard
+        </Link>
+
+        <Link
+          className={`${location.pathname === "/highlight" ? "text-foreground" : "text-muted-foreground"} transition-colors hover:text-foreground`}
+          to={`/highlight`}
+        >
+          Highlight
+        </Link>
           </nav>
         </SheetContent>
       </Sheet>

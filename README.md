@@ -1,4 +1,4 @@
-# Project 01 - 6420061
+
 
 - Score: 10%
 - Due Date: Sunday 25 August 2024
@@ -65,3 +65,27 @@
     - c. Remove cars from highlight page
 
     - d. On reload, the highlighted items persists.
+
+
+## Usage
+
+To install the project, run the following command:
+```bash
+npm install
+```
+
+To run the project, run the following command:
+```bash
+npm run dev 
+```
+
+To build the project, run the following command:
+```bash
+npm run build
+```
+
+## Screenshots
+
+![Dashboard](./example1.png)
+![Highlighted Cars](./example2.png)
+```

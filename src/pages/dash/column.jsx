@@ -1,3 +1,5 @@
+import { Underline } from "lucide-react";
+
 export const columns = [
   {
     accessorKey: "brand",
@@ -9,20 +11,26 @@ export const columns = [
     cell: ({ row }) => {
       const car = row.original;
       return car.models.length > 0 ? (
-        <table id="models">
-          <tr>
-            <th>Model</th>
-            <th>Amount</th>
-            <th>Price</th>
-          </tr>
-          {car.models.map((model, index) => (
-            <tr key={index}>
-              <td>{model.name}</td>
-              <td>{model.count}</td>
-              <td>{model.price.toLocaleString()}</td>
-            </tr>
-          ))}
-        </table>
+        <div className="">
+          <label onClick={(e) => {e.currentTarget.textContent =  e.currentTarget.textContent == 'Hide Detail' ? 'Show Detail' : 'Hide Detail'}} htmlFor={car.brand} style={{textDecoration: "underline"}}>Show detail</label>
+          <input id={car.brand} type="checkbox" />
+          <table id="models">
+            <tbody >
+              <tr>
+                <th>Model</th>
+                <th>Amount</th>
+                <th>Price</th>
+              </tr>
+              {car.models.map((model, index) => (
+                <tr key={index}>
+                  <td>{model.name}</td>
+                  <td>{model.count}</td>
+                  <td>{model.price.toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         <div>No Models</div>
       );
@@ -36,7 +44,6 @@ export const columns = [
       const car = row.original;
       let carAmount = 0;
       car.models.map((model) => {
-        console.log(model.price, model.count);
         carAmount += model.count;
       });
       return (
@@ -57,8 +64,7 @@ export const columns = [
       const car = row.original;
       let total = 0;
       car.models.map((model) => {
-        console.log(model.price, model.count);
-        total += model.price * model.count;
+        total += model.price * (model.count > 0 ? model.count : 1);
       });
       return (
         <div>

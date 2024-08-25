@@ -101,7 +101,7 @@ export default function Dash() {
       const models = Object.keys(modelsCount).map((model) => ({
         name: model,
         count: modelsCount[model],
-        price: parseInt((cars.find((car) => car.Model === model).Prc).replace(",", "")),
+        price: parseInt((cars.find((car) => car.Model === model).Prc).replace(/,/g, "")),
       }));
       return {
         brand: brand.Name,

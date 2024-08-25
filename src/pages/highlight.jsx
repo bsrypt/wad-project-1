@@ -57,7 +57,7 @@ export default function Highlight() {
                 </div>
                 <div className="p-4">
                   <p className="text-xs text-primary font-semibold">{carsData.MMList.find((car) => car.mkID === item.MkID).Name}</p>
-                  <p className="text-lg font-bold">{item.Model}</p>
+                  <p className="text-2xl font-bold">{item.Model}</p>
                   <p className="text-sm text-muted-foreground mt-2">{item.NameMMT}</p>
                   <div className="flex justify-between items-center mt-2">
                     <p className="text-lg text-foreground">฿ {item.Prc}</p>

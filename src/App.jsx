@@ -6,10 +6,9 @@ function App() {
   const navigate = useNavigate();
   console.log(location);
   useEffect(() => {
-    // if (((!(location.pathname).includes("dash")) || (!(location.pathname).includes("highlight")))) {
-    //   console.log('navigae')
-    //   navigate("/dash");
-    // }
+    if (location.pathname === "/wad-project-1/") {
+      navigate("dash");
+    }
   });
 
   return (

@@ -89,3 +89,9 @@ npm run build
 ![Dashboard](./example1.png)
 ![Highlighted Cars](./example2.png)
 ```
+
+## Team Members
+
+- Panuphong Burakitphachai 6410521
+- Phawat Tanajiranon 6413056
+- Nitipoom Aumpitak 6420061

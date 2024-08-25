@@ -30,23 +30,40 @@ export const columns = [
   },
 
   {
-    accessorKey: "Prc",
-    header: () => <div className="text-left">Total Value (Amount)</div>,
+    accessorKey: "Total Amount",
+    header: () => <div className="text-left">Total Amount</div>,
     cell: ({ row }) => {
       const car = row.original;
-      let total = 0;
       let carAmount = 0;
       car.models.map((model) => {
         console.log(model.price, model.count);
         carAmount += model.count;
+      });
+      return (
+        <div>
+          {car.models.length > 0 ? (
+            <div className="">{carAmount.toLocaleString()}</div>
+          ) : (
+            <div></div>
+          )}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "Total Value",
+    header: () => <div className="text-left">Total Value (Baht)</div>,
+    cell: ({ row }) => {
+      const car = row.original;
+      let total = 0;
+      car.models.map((model) => {
+        console.log(model.price, model.count);
         total += model.price * model.count;
       });
       return (
         <div>
           {car.models.length > 0 ? (
-            <div className="">
-              {total.toLocaleString()} ({carAmount.toLocaleString()})
-            </div>
+            <div className="">{total.toLocaleString()}</div>
           ) : (
             <div></div>
           )}

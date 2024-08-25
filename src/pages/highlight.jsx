@@ -44,7 +44,7 @@ export default function Highlight() {
         </div>
       </div>
       {highlightCar.length > 0 ? (
-        <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 justify-center mt-6 gap-4">
+        <div className="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 justify-center mt-6 gap-4">
           {highlightCar.map((item, index) => {
             return (
               <Card key={index} className="rounded-2xl flex flex-col">

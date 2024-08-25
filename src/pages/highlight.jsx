@@ -21,22 +21,14 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Trash, X } from "lucide-react";
+import carsData from '@/assets/taladrod-cars.json';
 
 export default function Highlight() {
-  const [cars, setCars] = useState([]);
   const [selectedCar, setSelectedCar] = useState();
   const [highlightCar, setHighlightCar] = useState([]);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   useEffect(() => {
     setHighlightCar(JSON.parse(localStorage.getItem("cars") || "[]"));
-    fetch("/taladrod-cars.json")
-      .then((response) => response.json())
-      .then((jsonData) => {
-        const carsData = jsonData.Cars;
-        // console.log(carsData);
-        setCars(carsData);
-      })
-      .catch((error) => console.error("Error fetching JSON:", error));
   }, []);
 
   return (
@@ -45,28 +37,19 @@ export default function Highlight() {
         <p className="text-2xl font-semibold">Highlight</p>
         {highlightCar.length > 0 && (
           <div className="flex gap-2">
-            {isDeleteMode ? (
-              <Button
-                className="w-12"
-                variant="destructive"
-                onClick={() => {
-                  setHighlightCar([]);
-                  localStorage.setItem("cars", JSON.stringify([]));
-                  setIsDeleteMode(false);
-                }}
-              >
-                Clear
-              </Button>
-            ) : null}
             <Button
-              className="w-12"
-              variant="outline"
-              onClick={() => setIsDeleteMode(!isDeleteMode)}
+              variant="destructive"
+              className="flex items-center gap-1"
+              onClick={() => {
+                setHighlightCar([]);
+                localStorage.setItem("cars", JSON.stringify([]));
+                setIsDeleteMode(false);
+              }}
             >
-              {isDeleteMode ? <X /> : <Trash />}
+              <Trash className="h-4 w-4" /> Clear
             </Button>
             <AddHighlight
-              cars={cars}
+              cars={carsData}
               setHighlightCar={setHighlightCar}
               highlightCar={highlightCar}
               setSelectedCar={setSelectedCar}
@@ -76,34 +59,33 @@ export default function Highlight() {
         )}
       </div>
       {highlightCar.length > 0 ? (
-        <div className="flex flex-wrap justify-center mt-6 gap-4">
+        <div className="grid grid-cols-4 justify-center mt-6 gap-4">
           {highlightCar.map((item, index) => {
             return (
-              <Card key={index} className="w-80 rounded-2xl relative">
-                {isDeleteMode && (
-                  <div
-                    className="absolute bg-red-500/80 cursor-pointer hover:bg-red-700/80 h-8 rounded-full flex justify-center items-center top-2 right-2 w-8"
-                    onClick={() => {
-                      const newCars = highlightCar.filter(
-                        (highlight) => highlight.Cid !== item.Cid,
-                      );
-                      setHighlightCar(newCars);
-                      localStorage.setItem("cars", JSON.stringify(newCars));
-                    }}
+              <Card key={index} className="rounded-2xl relative">
+                <img
+                  src={item.Img600}
+                  className="object-contain  rounded-t-2xl "
+                  alt={item.Name}
+                />
+                <div className="p-2">
+                  <div className=" ">
+                    <p>{item.NameMMT}</p>
+                  </div>
+
+                  <Button onClick={() => {
+                    const newCars = highlightCar.filter(
+                      (highlight) => highlight.Cid !== item.Cid,
+                    );
+                    setHighlightCar(newCars);
+                    localStorage.setItem("cars", JSON.stringify(newCars));
+                  }}
+                    className='mt-2'
                   >
                     <X className="h-4 text-white" />
-                  </div>
-                )}
-                <div className="w-80 h-52 overflow-hidden">
-                  <img
-                    src={item.Img600}
-                    className="object-contain rounded-t-2xl "
-                    alt={item.Name}
-                  />
+                    Remove</Button>
                 </div>
-                <div className="p-2">
-                  <p>{item.NameMMT}</p>
-                </div>
+
               </Card>
             );
           })}
@@ -119,7 +101,7 @@ export default function Highlight() {
             </p>
             <div className="mt-2">
               <AddHighlight
-                cars={cars}
+                cars={carsData}
                 setHighlightCar={setHighlightCar}
                 highlightCar={highlightCar}
                 setSelectedCar={setSelectedCar}
@@ -134,14 +116,13 @@ export default function Highlight() {
 }
 
 function AddHighlight({
-  cars,
   setHighlightCar,
   highlightCar,
   setSelectedCar,
   selectedCar,
 }) {
   return (
-    <Dialog>
+    <Dialog >
       <DialogTrigger asChild>
         <Button>Add Highlight Car</Button>
       </DialogTrigger>
@@ -159,14 +140,14 @@ function AddHighlight({
             </Label>
             <Select
               onValueChange={(e) => {
-                setSelectedCar(cars.find((item) => item.Cid === e));
+                setSelectedCar(carsData.Cars.find((item) => item.Cid === e));
               }}
             >
               <SelectTrigger className="w-[300px]">
                 <SelectValue placeholder="Choose a car" />
               </SelectTrigger>
               <SelectContent>
-                {cars.map((item, index) => {
+                {carsData.Cars.map((item, index) => {
                   if (
                     highlightCar.find((highlight) => highlight.Cid === item.Cid)
                   ) {
@@ -203,6 +184,6 @@ function AddHighlight({
           </DialogClose>
         </DialogFooter>
       </DialogContent>
-    </Dialog>
+    </Dialog >
   );
 }

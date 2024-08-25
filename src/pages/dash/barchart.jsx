@@ -44,6 +44,10 @@ export function MyBarChart({ data, colors }) {
   );
   return (
     <Card>
+      <CardHeader>
+        <CardTitle>Stacked Bar Chart</CardTitle>
+        <CardDescription>Models of a brand in a bar</CardDescription>
+      </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={data}>
@@ -62,7 +66,7 @@ export function MyBarChart({ data, colors }) {
                 key={model}
                 dataKey={model}
                 stackId="a"
-                fill={colors[index]} // Default color if not in config
+                fill={colors[index % colors.length]} // Default color if not in config
                 width={1}
 
               />

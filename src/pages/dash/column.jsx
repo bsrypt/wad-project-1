@@ -51,7 +51,7 @@ export const columns = [
           {car.models.length > 0 ? (
             <div className="">{carAmount.toLocaleString()}</div>
           ) : (
-            <div></div>
+            <div>-</div>
           )}
         </div>
       );
@@ -71,7 +71,7 @@ export const columns = [
           {car.models.length > 0 ? (
             <div className="">{total.toLocaleString()}</div>
           ) : (
-            <div></div>
+            <div>-</div>
           )}
         </div>
       );
